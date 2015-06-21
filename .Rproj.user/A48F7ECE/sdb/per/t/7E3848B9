@@ -1,0 +1,17 @@
+{
+    "contents" : "rm(list=ls())\nlibrary(data.table)\nlibrary(ggplot2)\nlibrary(caret)\nlibrary(doParallel)\nlibrary(randomForest)\n\npro_in_dat=read.csv(\"pml-training.csv\",nrows =2)\nhead(pro_in_dat)\n\nkeywords=c(\"X\",\"user_name\",\"min\",\"max\",\"amplitude\",\"window\",\"kurtosis\",\"user\",\"*timestamp*\",\"*skewness*\",\"var\",\"avg\",\"stddev\")\nstrings=colnames(pro_in_dat)\n# colnames(pro_in_dat)[!apply(sapply(keywords, grepl, strings, ignore.case=TRUE),1,any)]\n\nmat=apply(sapply(keywords, grepl, strings, ignore.case=TRUE),1,any)\nmat[mat]=\"NULL\"\nmat[mat==FALSE]=NA\n\n\npro_in_dat=read.csv(\"pml-training.csv\",colClasses = mat)\nlevels(pro_in_dat$classe)\n\ninTrain <- createDataPartition(y=pro_in_dat$classe,p=0.7, list=FALSE)\ntraining <- pro_in_dat[inTrain,]\ntesting <- pro_in_dat[-inTrain,]\n# pred_training <- pro_in_dat[inTrain,41]\n\n# cl <- makePSOCKcluster(2)\n# registerDoParallel(cl)\nctrl <- trainControl(preProcOptions = list(pcaComp=4))\n# modFit=train(Classe~.,data=training, method=\"rf\",prox=TRUE,preProcess=c(\"pca\"),trControl = ctrl)\nmodFit=randomForest(classe~.,data=training,ntree=500)\n# stopCluster(cl)\nmodFit\n\npred_out=predict(modFit,testing[,1:40])\n\nconfusionMatrix(testing$classe,pred_out)\n# \n# cs_testing=read.csv(\"pml-testing.csv\",colClasses = mat)\n# \n# cs_pred_out=predict(modFit,cs_testing[,1:40])\n# \n# confusionMatrix(cs_testing$classe,cs_pred_out)\n# \n# \n# save(modFit,file=\"rand_forest_formula.RData\")\nsave.image()\nunlink(\"rand_forest_formula.RData\")\nunlink(\".RData\")\n\n\nload(\"rand_forest_formula.RData\")\n\ncs_testing=read.csv(\"pml-testing.csv\")\n\ncs_pred_out=predict(modFit,cs_testing[,1:40])\n\nconfusionMatrix(cs_testing$classe,cs_pred_out)\n\n\npml_write_files = function(x){\n        n = length(x)\n        for(i in 1:n){\n                filename = paste0(\"problem_id_\",i,\".txt\")\n                write.table(x[i],file=filename,quote=FALSE,row.names=FALSE,col.names=FALSE)\n        }\n}\n\n",
+    "created" : 1434863567503.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2654169076",
+    "id" : "7E3848B9",
+    "lastKnownWriteTime" : 1434383251,
+    "path" : "C:/Users/Aneesh/Dropbox/Courses/Data_sci_sp/Prac Machine Learning/PML_PA/RF_script.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

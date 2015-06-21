@@ -1,0 +1,17 @@
+{
+    "contents" : "\n# This is the user-interface definition of a Shiny web application.\n# You can find out more about building applications with Shiny here:\n#\n# http://shiny.rstudio.com\n#\n\nlibrary(shiny)\n\nshinyUI(fluidPage(\n\n  # Application title\n  titlePanel(\"Old Faithful Geyser Data\"),\n\n  # Sidebar with a slider input for number of bins\n  sidebarLayout(\n    sidebarPanel( \"Here\",\n      sliderInput(\"temp\",\n                  \"Select Body Temperature\",\n                  min = 35,\n                  max = 42,\n                  value = 37, step=0.5),\n      selectInput(\"naus\", \"Do you feel  nausea?\",\n                  choices = c(\n                          'Yes' = 'yes',\n                          'No' = 'no'\n                  ),\n                  selected = \"No\"\n      ),\n      selectInput(\"LumPain\", \"Do you Lumbar Pain? (Lower Back Pain)\",\n                  choices = c(\n                          'Yes' = 'yes',\n                          'No' = 'no'\n                  ),\n                  selected = \"No\"\n      ),\n      selectInput(\"UrinePushing\", \"Do you have a continuous need for urination?\",\n                  choices = c(\n                          'Yes' = 'yes',\n                          'No' = 'no'\n                  ),\n                  selected = \"No\"\n      ),\n      selectInput(\"MictPain\", \"Is urinating painful?\",\n                  choices = c(\n                          'Yes' = 'yes',\n                          'No' = 'no'\n                  ),\n                  selected = \"No\"\n      ),\n      selectInput(\"burning\", \"Do you have any of the following symptoms: Burning of urethra, itch, swelling of urethra outlet\",\n                  choices = c(\n                          'Yes' = 'yes',\n                          'No' = 'no'\n                  ),\n                  selected = \"No\"\n      )\n      \n    ),\n\n    # Show a plot of the generated distribution\n    mainPanel(\n      plotOutput(\"distPlot\")\n    )\n  )\n))\n",
+    "created" : 1434858756563.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2714471344",
+    "id" : "A617A66E",
+    "lastKnownWriteTime" : 1434863331,
+    "path" : "C:/Users/Aneesh/Dropbox/Courses/Data_sci_sp/Dev Data Prod/project/Acute Inflamation Prediction/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

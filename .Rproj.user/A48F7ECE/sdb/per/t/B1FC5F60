@@ -1,0 +1,17 @@
+{
+    "contents" : "rm(list=ls())\nlibrary(caret)\n# https://archive.ics.uci.edu/ml/datasets/Acute+Inflammations\n\npro_in_dat=read.table(\"diagnosis.data\", fileEncoding=\"UTF-16\", dec=\",\")\n\ncolnames(pro_in_dat)=c('temp','naus','LumPain','UrinePushing','MictPain','burning','BladInflm','Nephritis')\n\n\nblad_in=pro_in_dat[,1:7]\nneph_in=pro_in_dat[,c(1:6,8)]\n#Create Data Partition\n\nBinTrain <- createDataPartition(y=blad_in$BladInflm,p=0.8, list=FALSE)\nBtraining <- blad_in[BinTrain,]\nBtesting <- blad_in[-BinTrain,]\n\nNinTrain <- createDataPartition(y=neph_in$Nephritis,p=0.8, list=FALSE)\nNtraining <- neph_in[NinTrain,]\nNtesting <- neph_in[-NinTrain,]\n\n\n# nearZeroVar(Btesting[,1:6],saveMetrics=TRUE)\n\nlibrary(randomForest)\nBmodFit=randomForest(BladInflm~.,data=Btraining)\nNmodFit=randomForest(Nephritis~.,data=Ntraining)\n\nBpred_tr=predict(BmodFit,Btraining[,1:6])\n# confusionMatrix(Bpred_tr,Btraining$BladInflm)\n\n\nNpred_tr=predict(NmodFit,Ntraining[,1:6])\n# confusionMatrix(Npred_tr,Ntraining$Nephritis)\n\nsave(BmodFit,file=\"Bpred_formula.RData\")\n# save.image()\n# unlink(\"Bpred_formula.RData\")\n# unlink(\".RData\")\n\nsave(NmodFit,file=\"Npred_formula.RData\")\n# save.image()\n# unlink(\"Npred_formula.RData\")\n# unlink(\".RData\")\n\n\n# '35,9'\tTemperature of patient \n# 'no'\tOccurrence of nausea \n# 'no'\tLumbar pain \n# 'yes'\tUrine pushing (continuous need for urination) \n# 'yes'\tMicturition pains \n# 'yes'\tBurning of urethra, itch, swelling of urethra outlet \n# 'yes'\tdecision: Inflammation of urinary bladder \n# 'no'\tdecision: Nephritis of renal pelvis origin\n",
+    "created" : 1434862688299.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2822922305",
+    "id" : "B1FC5F60",
+    "lastKnownWriteTime" : 1434863764,
+    "path" : "C:/Users/Aneesh/Dropbox/Courses/Data_sci_sp/Dev Data Prod/project/script_1.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "type" : "r_source"
+}
